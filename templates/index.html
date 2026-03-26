@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>المساعد الذكي</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; background: #f5f5f5; }
+        .chat { background: white; border-radius: 10px; padding: 20px; height: 400px; overflow-y: auto; }
+        .user { text-align: left; background: #007bff; color: white; padding: 10px; border-radius: 10px; margin: 5px; }
+        .bot { text-align: right; background: #e9ecef; padding: 10px; border-radius: 10px; margin: 5px; }
+        input { width: 80%; padding: 10px; margin-top: 10px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🤖 المساعد الذكي</h1>
+    <div class="chat" id="chat"></div>
+    <input type="text" id="question" placeholder="اكتب سؤالك هنا...">
+    <button onclick="ask()">إرسال</button>
+
+    <script>
+        async function ask() {
+            const q = document.getElementById('question').value;
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<div class="user">أنت: ${q}</div>`;
+            const res = await fetch('/ask', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({question: q})
+            });
+            const data = await res.json();
+            chat.innerHTML += `<div class="bot">المساعد: ${data.answer}</div>`;
+            document.getElementById('question').value = '';
+            chat.scrollTop = chat.scrollHeight;
+        }
+    </script>
+</body>
+</html>

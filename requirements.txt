@@ -1,0 +1,12 @@
+flask
+google-generativeai
+langchain
+langchain-community
+chromadb
+pypdf
+python-docx
+sentence-transformers
+faiss-cpu
+tiktoken
+python-dotenv
+gunicorn
